@@ -1,15 +1,20 @@
 ---
-title: Tema 1 - Trabajando con R
-author: Juan Gabriel Gomila & María Santos
-output: 
+title: "Tema 1 - Trabajando con R"
+author: "Juan Gabriel Gomila & María Santos"
+output:
   ioslides_presentation:
-    widescreen: true
+    widescreen: yes
     css: JB_style.css
     logo: Imgs/LogoCurso.png
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(tinytex)
+```
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
 ```
 # Conociendo R
 
@@ -279,7 +284,53 @@ doble(miVariable)
 cuadrado = function(x){x^2}
 cuadrado(miVariable)
 ```
+  
+  
+## Ejemplos 
 
+```{r}
+#f(x) = x ^ 3 - (3^x)*sen(x)
+f = function(x) { 
+  x^3 - (3^x)*sin(x)
+  } #Ejemplo de formato de función
+f(4)
+#multiples instrucciones
+suma3 = function(numero) {
+  numero=numero+1;
+  numero=numero+1;
+  numero+1
+}
+suma3(5)
+```
+
+## Listar y eliminar variables del entorno
+
++ `ls()` muestra todos los objetos, variable y funciones
++ `rm(nombre)` para eliminar un objecto determinado  
++ `rm(list = ls())` equivale a usar la escoba para eliminar todos los objectos del entorno
+
+## Ejercicio Tema1: Creando la función de Operaciones Básicas
+
+```{r, Operaciones básicas}
+opBasics = function(a,b){
+  print("Suma")
+  print(a+b)
+  print('Resta')
+  print(paste(sprintf('%i - %i = ',a,b),a-b))
+  print(paste(sprintf('%i - %i = ',b,a),b-a))
+  print('Producto')
+  print(a*b)
+  print('Cociente de la división entera')
+  print(paste(sprintf('%i : %i = ',a,b),a%/%b))
+  print(paste('Con resto',a%%b))
+  print('Cociente de la división entera')
+  print(paste(sprintf('%i : %i = ',b,a),b%/%a))
+  print(paste('Con resto', b%%a))
+  }
+opBasics(9,2)
+```
+Funciones usadas para el disaplay del resultado: print(),paste(), sprintf()
+La funcion `print(x,n)` imprime n cifras significativas de x.
 
 ## Números complejos
 

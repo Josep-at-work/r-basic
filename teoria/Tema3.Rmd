@@ -1,15 +1,18 @@
 ---
-title: Tema 3 - Estructuras de datos
-author: Juan Gabriel Gomila & María Santos
-output: 
+title: "Tema 3 - Estructuras de datos"
+author: "Juan Gabriel Gomila & María Santos"
+output:
   ioslides_presentation:
-    widescreen: true
+    widescreen: yes
     css: JB_style.css
     logo: Imgs/LogoCurso.png
+  slidy_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(tinytex)
 ```
 
 # Vectores
@@ -98,7 +101,8 @@ $$a_n = a_1 + (n-1)\cdot d$$
 Cuando queremos aplicar una función a cada uno de los elementos de un vector de datos, la función `sapply` nos ahorra tener que programar con bucles en `R`:
 
 - ```sapply(nombre_de_vector,FUN=nombre_de_función)```: para aplicar dicha función a todos los elementos del vector
-- ```sqrt(x)```: calcula un nuevo vector con las raíces cuadradas de cada uno de los elementos del vector $x$
+equivale al bucle for en *Python*, pero para R el sapplay es mucho mejor y más optimo.
+- ```sqrt(x)```: calcula un nuevo vector con las raíces cuadradas de cada uno de los elementos del vector $x$  
 
 ## Funciones
 
@@ -190,11 +194,11 @@ v[v != 19 & v>15]
 	
 ## Condicionales
 
-- ```which(x cumple condición)```: para obtener los índices de las entradas del vector $x$ que satisfacen la condición dada
-- ```which.min(x)```: nos da la primera posición en la que el vector $x$ toma su valor mínimo
-- ```which(x==min(x))```: da todas las posiciones en las que el vector $x$ toma sus valores mínimos
-- ```which.max(x)```: nos da la primera posición en la que el vector $x$ toma su valor máximo
-- ```which(x==max(x))```: da todas las posiciones en las que el vector $x$ toma sus valores máximos
+- ```which(x cumple condición)```: para obtener los **índices de las entradas** del vector $x$ que satisfacen la **condición** dada
+- ```which.min(x)```: nos da la **primera posición** en la que el vector $x$ toma su valor mínimo
+- ```which(x==min(x))```: da **todas las posiciones** en las que el vector $x$ toma sus valores mínimos
+- ```which.max(x)```: nos da la **primera posición** en la que el vector $x$ toma su valor máximo
+- ```which(x==max(x))```: da **todas las posiciones** en las que el vector $x$ toma sus valores máximos
 
 
 # Factores
@@ -203,7 +207,7 @@ v[v != 19 & v>15]
 
 <l class="definition">Factor</l>: es como un vector, pero con una estructura interna más rica que permite usarlo para clasificar observaciones
 
-- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético
+- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético.
 - Para definir un factor, primero hemos de definir un vector y trasformarlo por medio de una de las funciones `factor()` o `as.factor()`.
 
 ## La función factor()
@@ -236,6 +240,7 @@ facOrd
 
 
 # Lists
+Similar a los diccionarios en Python
 
 ## List
 
