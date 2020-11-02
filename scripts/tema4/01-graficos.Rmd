@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Gráficos con la función `plot`
 
+Todos los parametros fig. nos permiten editar la figura, lugo labels titulo y tal van dentro del plot.
+
 ```{r primer_plot, fig.cap="Gráfico básico explicando el uso del plot", fig.align='center'}
 x = c(2,6,4,9,-1)
 y = c(1,8,4,-2,4)
@@ -25,7 +27,7 @@ plot(2^(1:6))
 
 Si queremos representar una función $f(x)$:
 
-```{r}
+```{r, fig.cap= 'Plot takes as x 101 values from 0 to 1, to evaluate the function'}
 f <- function(x){ sqrt(x) }
 plot(f)
 ```
@@ -47,6 +49,11 @@ plot(fib, xlab = "n", ylab = expression(F[n]),
 par(mfrow = c(1,1))
 ```
 
++ `pch` sirve para elegir el tipo de punto, su forma y color. Para los **puntos del 21 al 25** son especiales, con el parámetro `col` se seleccionará el color del borde y para el color del relleno se tiene que añadir un parametro adicional, `bg`.
+
++ `par(mfrow = c(x,y))` Te informa sobre el formato de los graficos en caso de insertar varios graficos. x indica el número de filas e y el numero de gráficos por fila. 
+
++ En esta última chunk se ha añadido el `echo=False` para elimina del documento final toda la parafarnalia del chunk dejando solo el output.
 
 ```{r}
 plot(n, fib, pch = 21, col = "red", bg = "yellow", cex = 1.2, 
@@ -66,12 +73,13 @@ points(0,0, pch = 19)
 points(-3:3, (-3:3)^2, col = "blue")
 abline(2,3, lty = "dashed", col = "red")
 abline(v = 2, lty = "dotted", col = "green")
-abline(h = 5, lty = "dotdash", col = "gray")
+abline(h = 2, lty = "dotdash", col = "gray")
 ```
+Se trata de ir añadiendo capas de datos sobre la figura inicial. La propiedades generales del grafico se tiene que definir al inicio despues solo se pueden modificar las propiedades de cada elemento como el tipo de linia color ... 
 
 ```{r}
 f <- function(x){x^2}
-plot(f, xlim = c(-3,3), col = "red", lwd = 2, ylab = expression(y^2), xlab = "x")
+plot(f, xlim = c(-3,3), col = "red", lwd = 2, ylab = expression(y^2), xlab = "x", main='Add a grid with the abline object')
 abline(h=0:9, v = -3:3, lty="dotted", col = "grey")
 ```
 

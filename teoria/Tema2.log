@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.23)  23 OCT 2020 18:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.10.23)  30 OCT 2020 11:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1075,7 +1075,11 @@ No file Tema2.nav.
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 165.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 172.
+
+Overfull \vbox (7.0561pt too high) detected at line 172
+ []
+
 [3
 
 ] [4
@@ -1128,11 +1132,11 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
 l.5 sintaxis \(\LaTeX
                      \) 
 Here is how much of TeX's memory you used:
- 22751 strings out of 481865
- 421647 string characters out of 5929310
- 686623 words of memory out of 5000000
- 38585 multiletter control sequences out of 15000+600000
- 569569 words of font info for 55 fonts, out of 8000000 for 9000
+ 22753 strings out of 481865
+ 421676 string characters out of 5929310
+ 687623 words of memory out of 5000000
+ 38586 multiletter control sequences out of 15000+600000
+ 572337 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  107i,11n,111p,430b,374s stack positions out of 5000i,500n,10000p,200000b,80000s
 

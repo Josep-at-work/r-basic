@@ -13,6 +13,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, comment = NA)
 ```
 
+## Ejemplos
+
+En la carpeta scripts del tema4 se encuentra el markdown de ejemplos de joanby.
 
 ## Gráfico básico de puntos
 - `plot(x,y)`: para dibujar un gráfico básico de puntos siendo $x,y$ vectores numéricos
@@ -40,6 +43,7 @@ plot(alumnos,notas)
 - `pch=n`: para elegir el símbolo de los puntos. $n=0,1,...,25$. El valor por defecto es `pch = 1`
 - `cex`: para elegir el tamaño de los símbolos
 - `col="color en inglés"`: para elegir el color de los símbolos. [Gama de colores](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf).
++ `pch` sirve para elegir el tipo de punto, su forma y color. Para los **puntos del 21 al 25** son especiales, con el parámetro `col` se seleccionará el color del borde y para el color del relleno se tiene que añadir un parametro adicional, `bg`.
 
 
 ## Parámetro pch - Tipos de símbolos
@@ -52,7 +56,7 @@ plot(alumnos,notas)
 ## Escala logarítmica
 
 ```{r, fig.height = 3.75, fig.width = 9, fig.align = "center"}
-par(mfrow = c(1,2))
+par(mfrow = c(1,2)) #Formato de multiples graficos, 1 fila con 2 graficos.
 plot = plot(exp(1:20), xlab = "Indice", ylab = expression(e^{1:20}), 
             main = "Escala lineal")
 plotLog = plot(exp(1:20), log = "y", xlab = "Indice", ylab = expression(e^{1:20}), 
@@ -114,8 +118,12 @@ par(mfrow = c(1,1))
 - `lwd`: para especificar el grosor de las líneas
 - `xlim`: para modificar el rango del eje $X$
 - `ylim`: para modificar el rango del eje $Y$
-- `xaxp`: para modificar posiciones de las marcas en el eje $X$
+- `xaxp`: para modificar posiciones de las marcas en el eje $X$ 
 - `yaxp`: para modificar posiciones de las marcas en el eje $Y$
+xlim, ylim igualar a un vector(c) con el limite inferior y superior de cada eje.
+Tanto para yaxp como xaxp pide tres argumentos, (inicio, final, numero de divisiones)
+
+*Mucho más en `?plot`*
 
 
 ## Parámetros de la función plot()
@@ -131,9 +139,9 @@ plot(x,y, main = "Ejemplo de grafico", pch = 8, cex = 1, type = "b", lty = 4, lw
 
 ## Añadir elementos al gráfico
 
-- `points(x,y)`: añade un punto de coordenadas $(x, y)$ a un gráfico ya existente
-- `abline`: para añadir una recta a un gráfico ya existente
-    - `abline(a,b)`: añade la recta $y=ax+b$
+- `points(x,y)`: añade un punto de coordenadas $(x, y)$ a un gráfico ya existente.**Pueden ser un vector de puntos**
+- `abline`: para añadir una **recta** a un gráfico ya existente
+    - `abline(a,b)`: añade la recta $y=bx+a$
     - `abline(v = x0)`: añade la recta vertical $x=x_0$. $v$ puede estar asignado a un vector
     - `abline(h = y0)`:  añade la recta horizontal $y=y_0$. $h$ puede estar asignado a un vector
     
@@ -161,7 +169,7 @@ points(20,0, col = "red", cex = 4, pch = 16)
 abline (h = 0, lty = 2, col = "dodgerblue")
 ```
 
-## Añadir elementos al gráfico
+## Añadir Texto al gráfico
 
 - `text(x,y,labels = "....")`: añade en el punto de coordenadas $(x,y)$ el texto especificado como argumento de labels
     - `pos`: permite indicar la posición del texto alrededor de las coordenadas $(x,y)$. Admite los siguientes valores:
@@ -187,8 +195,9 @@ text(alumnos,notas, labels = c("S","A","N","E","N","S","A","A","E","N"),
 
 - `lines(x, y)`:añade a un gráfico existente una línea poligonal que une los puntos $(x_i, y_i)$ sucesivos. $x,y$ son vectores numéricos
 - `curve(curva)`: permite añadir la gráfica de una curva a un gráfico existente
-    - `add=TRUE`: si no, la curva no se añade
+    - `add=TRUE`: **si no, la curva no se añade**
     - La curva se puede especificar mediante una expresión algebraica con variable $x$, o mediante su nombre si la hemos definido antes
+    - A diferencia de de la anterior, `curve()` te permite añadir una función cualquiera sin tener que hacer un plot adicional.
     
     
 
@@ -210,6 +219,7 @@ curve(20*sin(x), add = TRUE, col = "green")
         - "center" / "right" / "left"
         
     - `legend`: contiene el vector de nombres entre comillas con los que queremos identificar a las curvas en la leyenda
+    - `col`, `lwd`, `lty`y otras propiedades de las linias se pueden añadir en forma de vector referenciando cada una a un valor de `legend` o lo que sería lo mismo a las distintas partes que queremos diferenciar del gráfico.
     
     
 ## Añadiendo leyenda
@@ -232,8 +242,12 @@ plot(x,sin(x),type="l",col="blue",lwd=3,
      xlab="", ylab="")
 lines(x,cos(x),col="green",lwd=3)
 lines(x, tan(x), col="purple",lwd=3)
-legend("bottomleft",col=c("blue","green","purple"),
-     legend=c("Seno","Coseno", "Tangente"), lwd=3, bty="l")
+legend("bottomleft",
+       col=c("blue","green","purple"),
+     legend=c("Seno","Coseno", "Tangente"),
+     lwd=3,
+     lty=c(2:4),
+     bty="1")
 ```
 
 ## Añadir elementos al gráfico
@@ -251,10 +265,10 @@ x = c(5*(1:10))
 plot(x,c(exp(-x)+(-1)^x*x/2*sin(x)^2), xlab = "", ylab = "", 
      main = "Grafico con varios elementos")
 segments(10,0,40,0, col = "red", lwd = 4)
-arrows(10,0,40,-10, col = " blue", length = 0.5, angle = 5, code = 3)
+arrows(10,0,40,-10, col = " blue", length = 0.5, angle = 5, code = 2)
 symbols(40,0,stars = cbind(1,.5,1,.5,1,.5,1,.5,1,.5), add = TRUE, lwd = 3, inches = 0.5)
 symbols(40,0,stars = cbind(1,.5,1,.5,1,.5,1,.5,1,.5), add = TRUE, lwd = 3)
-polygon(c(20,30,40),c(10,-10,10), col = "gold", density = 3, angle = 90, lty = 4, 
+polygon(c(20,30,40),c(10,-10,10), col = "gold", density = 50, angle = 90, lty = 4, 
         lwd = 5)
 ```
 

@@ -2,11 +2,12 @@
 title: "Tema 2 - Documentación con R Markdown"
 author: "Juan Gabriel Gomila & María Santos"
 output:
-  beamer_presentation: default
+  slidy_presentation: default
   ioslides_presentation:
     widescreen: yes
     css: JB_style.css
     logo: Imgs/LogoCurso.png
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
@@ -27,6 +28,11 @@ Para la mayor parte de las necesidades de este curso, en lo referente a la creac
 Sin embargo, a lo largo de este curso iremos ampliando estos contenidos en algunos temas cuando lo creamos necesario.
 
 Nosotros, en este tema, veremos cómo controlar el comportamiento de los bloques de código (<l class="definition">chunks</l>) al compilar el fichero R Markdown y cómo escribir fórmulas matemáticas bien formateadas.
+
+## Error
+
+**En caso de saltar algun error** al compilar es posible que falte instalar algún paquete. Para comprobarlo, en Rstudio ir a la **rueda dentada, seleccionar output options y en opciones avanzadas** seleccionar *Keep tex source file*.
+Luego abrir el **archivo original de tex** que crea el pdf y al ejecutarlo en la consola te avisará de los paquetes necesarios.
 
 # Fórmulas matemáticas
 
