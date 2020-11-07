@@ -2,11 +2,11 @@
 title: "Tema 3 - Estructuras de datos"
 author: "Juan Gabriel Gomila & María Santos"
 output:
+  slidy_presentation: default
   ioslides_presentation:
     widescreen: yes
     css: JB_style.css
     logo: Imgs/LogoCurso.png
-  slidy_presentation: default
   beamer_presentation: default
 ---
 
@@ -103,6 +103,8 @@ Cuando queremos aplicar una función a cada uno de los elementos de un vector de
 - ```sapply(nombre_de_vector,FUN=nombre_de_función)```: para aplicar dicha función a todos los elementos del vector
 equivale al bucle for en *Python*, pero para R el sapplay es mucho mejor y más optimo.
 - ```sqrt(x)```: calcula un nuevo vector con las raíces cuadradas de cada uno de los elementos del vector $x$  
+- Operaciones a vectores, con operaciones aritmeticas básicas de +,-,*,/,^ sin problemas.
+- Operaciones entre vectores, con operaciones aritmeticas básicas de +,-,*,/,^, entre vectores valor a valor siempre que ambos vectores tengan la misma longitud.
 
 ## Funciones
 
@@ -152,9 +154,24 @@ rev(v)
 
 - Combinad las dos funciones anteriores, `sort` y `rev` para crear una función que dado un vector $x$ os lo devuelva ordenado en orden decreciente.
 
+<!--x=c(1,3,5,7,9,2,4,6,8,10)
+  rev(sort(x)) -->
+
 - Razonad si aplicar primero `sort` y luego `rev` a un vector $x$ daría en general el mismo resultado que aplicar primero `rev` y luego `sort`.
 
+<!-- No da lo mismo ya que primero se tiene que ordenar asdencentemente para poder despues ordenarlo decrecientemente con el rev. Si hacemos primero rev() y despues sort() el rev no serviria para nada-->
+
 - Investigad la documentación de la función `sort` (recordad que podéis usar la sintaxis `?sort` en la consola) para leer si cambiando algún argumento de la misma podéis obtener el mismo resultado que habéis programado en el primer ejercicio.
+<!-- sort(x, decreasing = TRUE) -->
+
+## Solución
+
+```{r}
+x=c(1,3,5,7,9,2,4,6,8,10)
+rev(sort(x))
+sort(x, decreasing = TRUE)
+```
+*El orden importa ya que primero se tiene que ordenar asdencentemente para poder despues ordenarlo decrecientemente con el rev. Si hacemos primero rev() y despues sort() el rev no serviria para nada*
 
 ## Subvectores
 
@@ -162,14 +179,14 @@ rev(v)
 
 	- Los índices en R empiezan en 1
 	- ```vector[length(vector)]```: nos da la última entrada del vector
-	- ```vector[a:b]```: si $a$ y $b$ son dos números naturales, nos da el subvector con las entradas del vector original que van de la posición $a$-ésima hasta la $b$-ésima.
-	- ```vector[-i]```: si $i$ es un número, este subvector está formado por todas las entradas del vector original menos la entrada $i$-ésima. Si $i$ resulta ser un vector, entonces es un vector de índices y crea un nuevo vector con las entradas del vector original,cuyos índices pertenecen a $i$
+	- ```vector[a:b]```: si $a$ y $b$ son dos números naturales, nos da el subvector con las entradas del vector original que van de la posición $a$-ésima hasta la $b$-ésima. Si buscamos vector[b:a] R nos devuelve el subvector con el orden invers des de $b$ hasta $a$ enlugar de $a$ a $b$
+	- ```vector[-i]```: si $i$ es un número, este subvector está formado por todas las entradas del vector original menos la entrada $i$-ésima.
 	- ```vector[-x]```: si $x$ es un vector (de índices), entonces este es el complementario de vector[$x$]
 	
 
 ## Subvectores
 
-- También podemos utilizar operadores lógicos:
+- También podemos utilizar operadores lógicos que devuelven un vector de longitud igual al original de valores True False:
 	
 	- ```==```: =
 	- ```!=```: $\neq$
@@ -180,7 +197,7 @@ rev(v)
 	- ```!```: NO lógico
 	- ```&```: Y lógico
 	- ```|```: O lógico
-	
+
 	
 ## Subvectores
 
@@ -200,6 +217,32 @@ v[v != 19 & v>15]
 - ```which.max(x)```: nos da la **primera posición** en la que el vector $x$ toma su valor máximo
 - ```which(x==max(x))```: da **todas las posiciones** en las que el vector $x$ toma sus valores máximos
 
+## Apuntes 
+
+- *Se puede crear un subvector $v$ a partir de un vector $x$ a condición de otro vector $y$ siempre que tengan misma longitud.*
+```{r}
+x=c(1,2,3,4)
+y=c(1,-2,-3,4)
+x[y>0]
+```
+- Resultados de numeric(0) o interg(0) quieren decir que R no ha encontrado ningún valor o posición, respectivamente, que cumpla la condición.
+- A un vector existente se le pueden modificar los valores igualando una posición determinada a un nuevo valor; `x[2]=10`
+- NA(Not Available): No es un valor en si, es un concepto.Si no se coloca ningún valor en una posición concreta, en us busqueda nos dirá que su valor es NA. Existen funciones para quitar los NA.
+
+```{r}
+x = c(1,2,3,4,5,6,7,8,9)
+x[length(x) + 5]=9 #will add NA at the other 4 new positions
+x
+sum(x) #NA is an infection so any computation will result in NA
+sum(x, na.rm=TRUE) #You can remove the NAs
+which(x==NA) #don't work as NA is not a value but a concept
+is.na(x) #prints position of the NAs
+cumsum(x) #don't accept the parameter na.rm
+cumsum(x[!is.na(x)]) #now the cumsum is only applyed to non NAs of x
+cumsum(na.omit(x))
+na.omit(x) #removes NAs
+```
+
 
 # Factores
 
@@ -207,7 +250,7 @@ v[v != 19 & v>15]
 
 <l class="definition">Factor</l>: es como un vector, pero con una estructura interna más rica que permite usarlo para clasificar observaciones
 
-- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético.
+- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético o ascendente en caso de numericos.
 - Para definir un factor, primero hemos de definir un vector y trasformarlo por medio de una de las funciones `factor()` o `as.factor()`.
 
 ## La función factor()
@@ -217,7 +260,7 @@ v[v != 19 & v>15]
     - `levels`: permite especificar los niveles e incluso añadir niveles que no aparecen en el vector
     - `labels`: permite cambiar los nombres de los niveles
     
--  `levels(factor)`: para obtener los niveles del factor
+-  `levels(factor)`: para obtener los niveles del factor y/o modificarlos. En el caso de ser modificados, se hereda el orden original. Se pueden agrupar varios niveles en uno, asignandoles el mismo valor
 
 
 ## Factor ordenado
@@ -236,7 +279,22 @@ fac
 facOrd = ordered(c(1,1,1,2,2,3,2,4,1,3,3,4,2,3,4,4), 
        levels = c(1,2,3,4), labels = c("Sus","Apr","Not","Exc"))
 facOrd
+levels(fac) = c("Sus",'Apr','Apr','Apr') #asi se han agrupado lo valores 2,3 y 4 a un aprobado.
+fac
 ```
+
+## Apuntes
+
+Para clasificar datos, donde los niveles pueden ser distintas etiquetas.
+
+```{r}
+gender= c("H", "M", "M", "M", "H", "H")
+gender_fact = factor(gender)
+gender_fact2 = as.factor(gender) #ambos hacen lo mismo
+gender2 = factor(gender, levels=c('H','M'), labels=c('Hombre', 'Mujer'))
+gender2
+```
+- Los parametros *levels* y *labels* sería la traducción entre los valores del vector original y los del nuevo factor
 
 
 # Lists

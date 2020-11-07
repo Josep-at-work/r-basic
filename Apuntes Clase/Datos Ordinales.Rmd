@@ -1,0 +1,137 @@
+---
+title: "T7 Datos Ordinales"
+output: html_notebook
+data: 6/11/20
+---
+
+```{r}
+notas = ordered(c('S', 'A', 'N', 'Ex', 'S', 'S', 'S', 'Ex', 'N', 'A', 'A'), levels=c('S','A', 'N', 'Ex'))
+notas
+table(notas) #frecuencia absoluta 
+prop.table(table(notas)) #freceuncia relativa
+cumsum(table(notas)) #freceuncia absoluta acumulada
+cumsum(prop.table(table(notas))) #frecuencia relativa acumulada
+```
+Sample de longitud de coches 
+
+```{r}
+longitud = sample(c('Pequeños', 'Medianos', 'Grandes', 'Muy grandes', 'Muuuuy Grandes'), size =100, replace = TRUE)
+longitud = ordered(longitud, levels=c('Pequeños', 'Medianos', 'Grandes', 'Muy grandes', 'Muuuuy Grandes') )
+longitud
+fr.abs = table(longitud)
+fr.rel = prop.table(fr.abs)
+fr.abs.acum = cumsum(fr.abs)
+fr.rel.acum = cumsum(fr.rel)
+fr.rel.acum
+```
+Añadimos colores a los coches y creamos un data frame con colores y longitudes:
+
+```{r}
+colores = rep(c('Rojo', 'Verde', 'Azul', 'Amarillo'), c(30,25,35,10))
+colores #esto es un vector
+colores = factor(colores) #esto es un factor
+colores
+coches = data.frame(colores, longitud)
+head(coches)
+```
+Analisis, variables marginales?
+
+```{r}
+apply(table(coches), MARGIN = 1, FUN = cumsum)
+```
+```{r}
+t(apply(table(coches), MARGIN = 1, FUN = cumsum)
+) #transponemos la matriz
+```
+## Grafico ideal para mostrar una variable ordenada respecto a otra sin orden.
+
+```{r}
+apply(prop.table(table(coches), margin = 1), MARGIN = 1, FUN = cumsum)-> diagrama #margin define en que dirección acumular
+```
+```{r}
+t(apply(prop.table(table(coches), margin = 1), MARGIN = 1, FUN = cumsum)) 
+```
+```{r}
+barplot(diagrama)
+barplot(diagrama, beside = TRUE, legend=TRUE, 
+  args.legend = list(x = 'topleft', cex=0.4),
+  main='Título', xlab='Color', col=c('cyan', 'cyan1', 'cyan2','cyan3', 'cyan3')) #modificar leyenda
+```
+## Datos no ordenados
+`cut()` funcion para partir una variable aleatoria desordenada en segmentos
+
+```{r}
+rnorm(100, mean = 0, sd = 1) -> x
+cut(x,breaks = c(-Inf, -2, -1, 0, 1, 2, Inf), right=F)
+```
+
+Tambien se peuden hacer toda la pesca de frecuencias con numeros, los pilla como categorias y ya
+```{r}
+edades = c(17,18,25,40,53,32,29,45,24,23,25,22,22,23,60)
+table(edades)
+round(prop.table(table(edades)), 3)
+```
+Los ordenadores usan pseudoaleatoriedad establecida por una semilla pero no es aleatorio.
+
+```{r}
+sample(1:6, 20, replace=T)
+sample(1:6, 20, replace=T) #no se imprimen los mismos 20 valores
+set.seed(8)
+sample(1:6, 20, replace=T)
+set.seed(8)
+sample(1:6, 20, replace=T) #se imprimen los mismos ya que su pseudoaleatoriedad parte de la misma semilla
+set.seed(NULL)
+```
+
+Experimento
+
+```{r}
+set.seed(20201106)
+sample(1:6, 25, replace=T)->dados
+dados
+table(dados)
+prop.table(table(dados))
+cumsum(table(dados))
+cumsum(prop.table(table(dados))
+)
+```
+## Medidas de centralización
+
+```{r}
+mean(edades) #mediana aritmetica
+median(edades)
+median(dados)
+which(table(edades) == max(table(edades))) #devuleve el vector de posiciones de los datos más frecuentes de las edades
+names(which(table(edades) == max(table(edades)))
+) #devuelve las etiquetas de las posiciones y por lo tanto los valores más frecuentes.
+```
+Cuantiles, def: cuantil p es el valor del sample tal que el 
+
+cuartiles deviden un sample en 4 cuartos, 25,50,75
+
+```{r}
+quantile(dados) #devulete los cuartiles
+quantile(dados, 0.25)
+quantile(dados, 0.55) #puedes pedirle el cuantil que quieras
+max(dados)-min(dados)#rango de valores
+quantile(dados, 0.75) - quantile(dados, 0.25) #rango inter cuartilico
+```
+ Varianzas:
+ - Poblacional $N$
+ - De la muestra
+ 
+$$
+X=\{x_1,x_2, \dots, x_n\}  
+
+S^2 = \frac{\sum_{i=1}^N (x_i - \bar x)^2}{N} = \frac{\sum_{j=1}^n n_j(x_i - \bar x)^2}{N} = \sum_{j=1}^k f_j(x_j - \bar x)^2
+
+$$
+ 
+```{r}
+
+```
+
+
+
+
+

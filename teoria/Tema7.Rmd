@@ -49,7 +49,7 @@ Como recordaréis, para saber cuantas hay de cada una (su frecuencia absoluta), 
 
 ```{r}
 notas = ordered(c("S","A", "N", "Ex", "S", "S", "Ex", "Ex", "N", "A", "A", "A",
-                  "A", "N", "S"), levels = c("S", "A", "N", "Ex"))
+                  "A", "N", "S"), levels = c("S", "A", "N", "Ex")) #ordenados de menor a mayor
 table(notas)
 ```
 
